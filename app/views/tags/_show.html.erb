@@ -1,4 +1,4 @@
-<h2>Available Tags</h2>
+<h4>Available Tags</h4>
 
 <ul class="all_tags inline-list">
   <% @tags.each do |tag| %>
@@ -11,4 +11,6 @@
 </ul>
 
 <button>Confirm New Tags</button>
-<a href="<%=admin_dashboard_url%>"><button>Admin Dashboard</button></a>
+<a href="<%=admin_dashboard_url%>" class="right_align">
+<button>Back to Admin Dashboard</button>
+</a>
