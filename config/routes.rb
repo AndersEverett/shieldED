@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   # resources :users
 
   root 'users#index'
+  get '/sessions/login'                  => 'sessions#show_login_partial',       :as => 'login_partial'
   post '/sessions/login'                 => 'sessions#create',                  :as => 'login'
   get  '/sessions/logout'                => 'sessions#logout',                  :as => 'logout'
 
