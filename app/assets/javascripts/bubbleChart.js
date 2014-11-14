@@ -62,7 +62,7 @@
           ['',   1250,  100,      serverData.totals_quarter[44], serverData.offender_stats[44]],
         ]);
 
-        var options = {'title':"Current Month Trends",
+        var options = {'title':"Current Month Trends - Size Proportionate to Repeat Offense",
                         width:1000,
                         height:600,
                         is3D: true,

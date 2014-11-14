@@ -81,6 +81,7 @@ bindSearchTab = function() {
     $('#not-charts').show(400);
     $('.show-event-details').hide(400);
     $('.admin-search').show(400);
+    $(".report ul").empty();
   })
 },
 

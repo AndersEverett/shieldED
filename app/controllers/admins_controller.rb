@@ -8,7 +8,6 @@ class AdminsController < ApplicationController
   end
 
   def search
-    @results = ''
     @latest = Event.last(10)
     @results = Event.search(params[:search])
     render :json => @results
