@@ -3,8 +3,6 @@ class AdminsController < ApplicationController
   http_basic_authenticate_with :name => "Admin", :password => "1234"
 
   def admin_dashboard
-    @events = Event.all
-    @total = @events.length
     @latest = Event.last(10)
     render partial:'admin_dashboard'
   end
@@ -21,7 +19,6 @@ class AdminsController < ApplicationController
   end
 
   def bubbles
-
     totals_quarter = Event.get_month_totals
     totals_quarter
     offender_stats = Event.offender_stats
