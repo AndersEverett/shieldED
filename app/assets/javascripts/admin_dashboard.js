@@ -1,7 +1,10 @@
-bindEvents = function() {
-  $(".search-form").on('ajax:success', function(e, data){
-    var listItems = []
 
+
+bindEvents = function() {
+  // $.ajaxSetup({cache: false}});
+  $(".search-form").on('ajax:success', function(e, data){
+    var listItems = [];
+    
     $.each(data, function (obj, val){
       $a = $("<a />", {
         "href" : "#",
@@ -41,6 +44,7 @@ bindButtonClose = function() {
   $("#button-close").on('click', function() {
     $(".report").hide(400);
     $(".admin-search").show(400);
+    $(".report ul").empty();
   });
 };
 
@@ -83,6 +87,7 @@ bindSearchTab = function() {
 
 
 $( document ).ready(function() {
+ 
    bindEvents();
   $(".report").hide();
    bindLinkToEvent();
