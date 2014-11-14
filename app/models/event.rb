@@ -62,15 +62,18 @@ class Event < ActiveRecord::Base
     where("details LIKE ?", "%repellat%").count
   end
 
+  def self.keyword_per_week(word, num)
+    events = Event.by_week(Time.now - num.week)
+    events.where("details LIKE ?", "%#{word}%")
+  end
+
   def self.get_month_totals
     words = ['ducimus','aliquam', 'suscipit', 'molestiae', 'repellat', 'voluptatem', 'occaecati', 'blanditiis', 'impedit']
     totals = []
     words.each do |word|
       num = 4
         while num >= 0
-          events = Event.by_week(Time.now - num.week)
-          events = events.where("details LIKE ?", "%#{word}%").count
-          totals << events
+          totals << Event.keyword_per_week(word, num).count
           num -= 1
         end
       end
@@ -92,15 +95,10 @@ class Event < ActiveRecord::Base
     radius = 0
       num = 4
         while num >= 0
-          events = Event.by_week(Time.now - num.week)
-          events = events.where("details LIKE ?", "%#{word}%")
+          events = Event.keyword_per_week(word, num)
           events.each do |event|
             offender = event.offender
-            if bullies.include?(offender)
-              radius += bullies[bullies.index(offender)+1]
-              p radius
-            else radius += 1
-            end
+            radius += Event.bubble_draw(bullies, offender)
           end
           radius = radius/events.size
           num -= 1
@@ -110,11 +108,18 @@ class Event < ActiveRecord::Base
       radii
   end
 
+  def self.bubble_draw(bullies, offender)
+    if bullies.include?(offender)
+      radius = bullies[bullies.index(offender)+1]
+    else radius = 1
+    end
+    radius
+  end
+
   def self.get_quarter
     num = 4
     totals = []
       while num >= 0
-        p num
         events = Event.by_calendar_month(Time.now - num.month)
         totals << events.count
         num -= 1
