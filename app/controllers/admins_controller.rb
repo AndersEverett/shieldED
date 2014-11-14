@@ -19,7 +19,6 @@ class AdminsController < ApplicationController
   end
 
   def bubbles
-
     totals_quarter = Event.get_month_totals
     totals_quarter
     offender_stats = Event.offender_stats
