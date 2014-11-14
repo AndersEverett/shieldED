@@ -37,10 +37,6 @@ class Event < ActiveRecord::Base
     where("details LIKE ?", "%#{word}%")
   end
 
-  def self.get_totals
-    totals = []
-    totals << self.find_physical << self.find_verbal << self.find_rumor << self.find_cyber << self.find_exclusion
-  end
 
   def self.find_physical
     where("details LIKE ?", "%impedit%").count
@@ -61,10 +57,26 @@ class Event < ActiveRecord::Base
   def self.find_exclusion
     where("details LIKE ?", "%repellat%").count
   end
+  
+  def self.get_totals
+    totals = []
+    totals << self.find_physical << self.find_verbal << self.find_rumor << self.find_cyber << self.find_exclusion
+  end
 
   def self.keyword_per_week(word, num)
     events = Event.by_week(Time.now - num.week)
     events.where("details LIKE ?", "%#{word}%")
+  end
+  
+  def self.get_quarter
+    num = 4
+    totals = []
+      while num >= 0
+        events = Event.by_calendar_month(Time.now - num.month)
+        totals << events.count
+        num -= 1
+      end
+    totals
   end
 
   def self.get_month_totals
@@ -116,16 +128,6 @@ class Event < ActiveRecord::Base
     radius
   end
 
-  def self.get_quarter
-    num = 4
-    totals = []
-      while num >= 0
-        events = Event.by_calendar_month(Time.now - num.month)
-        totals << events.count
-        num -= 1
-      end
-    totals
-  end
 
   def tag(new_tag_ids)
     new_tag_ids.each do |tag|
